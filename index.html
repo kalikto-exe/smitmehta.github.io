@@ -1,134 +1,148 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wait… 💭</title>
+<title>Just wait…</title>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+:root{
+  --pink:#f9a8d4;
+  --lav:#c7d2fe;
+  --blue:#7dd3fc;
+  --bg1:#020617;
+  --bg2:#0f172a;
 }
 
-body {
-  background: linear-gradient(180deg, #0f172a, #020617);
-  color: #e5e7eb;
-  overflow-x: hidden;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-.container {
-  max-width: 420px;
-  margin: auto;
-  padding: 70px 20px 120px;
+body{
+  background:
+    radial-gradient(120% 120% at 50% -20%, #1e1b4b 0%, transparent 60%),
+    linear-gradient(180deg,var(--bg1),var(--bg2));
+  color:#e5e7eb;
+  min-height:100vh;
+  overflow-x:hidden;
 }
 
-/* TEXT */
-h1 {
-  font-size: 2.2rem;
-  color: #a5b4fc;
-  text-align: center;
+.container{
+  max-width:420px;
+  margin:auto;
+  padding:80px 20px 140px;
 }
 
-p {
-  margin-top: 20px;
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: #c7d2fe;
-  text-align: center;
+.fade{
+  opacity:0;
+  transform:translateY(24px);
+  transition:1s ease;
 }
 
-/* CARD */
-.card {
-  background: rgba(255,255,255,0.06);
-  border-radius: 22px;
-  padding: 30px;
-  margin-top: 45px;
-  border: 1px solid rgba(255,255,255,0.12);
-  backdrop-filter: blur(10px);
-  animation: fadeUp 1s ease forwards;
+.fade.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
-/* BUTTONS */
-.buttons {
-  display: flex;
-  gap: 15px;
-  margin-top: 30px;
-  justify-content: center;
+h1{
+  font-size:2.2rem;
+  text-align:center;
+  color:var(--lav);
 }
 
-button {
-  padding: 14px 26px;
-  border-radius: 30px;
-  border: none;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.2s ease;
+p{
+  margin-top:18px;
+  line-height:1.8;
+  text-align:center;
+  color:#cbd5f5;
+  font-size:1.05rem;
 }
 
-.yes {
-  background: linear-gradient(135deg, #38bdf8, #a78bfa);
-  color: #020617;
+.card{
+  margin-top:50px;
+  padding:32px;
+  border-radius:26px;
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.12);
+  backdrop-filter:blur(14px);
 }
 
-.no {
-  background: rgba(255,255,255,0.12);
-  color: #e5e7eb;
+.buttons{
+  display:flex;
+  gap:14px;
+  margin-top:28px;
+  justify-content:center;
 }
 
-button:hover {
-  transform: scale(1.05);
+button{
+  padding:14px 28px;
+  border-radius:999px;
+  border:none;
+  font-size:1rem;
+  font-weight:600;
+  cursor:pointer;
+  transition:.25s ease;
 }
 
-.hidden {
-  display: none;
+.yes{
+  background:linear-gradient(135deg,var(--blue),var(--lav));
+  color:#020617;
 }
 
-/* SWIPE GALLERY */
-.swipe-container {
-  margin-top: 40px;
-  overflow-x: auto;
-  display: flex;
-  gap: 20px;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
+.no{
+  background:rgba(255,255,255,0.14);
+  color:#e5e7eb;
 }
 
-.slide {
-  min-width: 100%;
-  scroll-snap-align: center;
+button:active{
+  transform:scale(.95);
+}
+
+.hidden{display:none}
+
+/* Swipe gallery */
+.swipe{
+  display:flex;
+  overflow-x:auto;
+  gap:20px;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+  margin-top:35px;
+}
+
+.slide{
+  min-width:100%;
+  scroll-snap-align:center;
 }
 
 .slide img,
-.slide video {
-  width: 100%;
-  border-radius: 22px;
-  border: 2px solid rgba(255,255,255,0.15);
+.slide video{
+  width:100%;
+  border-radius:26px;
+  border:2px solid rgba(255,255,255,0.15);
 }
 
-/* HINT */
-.hint {
-  margin-top: 15px;
-  font-size: 0.9rem;
-  color: #94a3b8;
+.hint{
+  margin-top:14px;
+  font-size:.85rem;
+  color:#94a3b8;
+  text-align:center;
 }
 
-/* FOOTER */
-footer {
-  margin-top: 90px;
-  text-align: center;
-  color: #94a3b8;
-  font-size: 0.9rem;
+footer{
+  margin-top:120px;
+  text-align:center;
+  font-size:.85rem;
+  color:#94a3b8;
 }
 
-/* ANIMATION */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
+/* soft floating glow */
+.glow{
+  color:var(--pink);
+  text-shadow:0 0 20px rgba(249,168,212,.4);
 }
 </style>
 </head>
@@ -138,53 +152,54 @@ footer {
 <div class="container">
 
   <!-- INTRO -->
-  <h1>Wait… 💭</h1>
-  <p>
+  <h1 class="fade show">Wait…</h1>
+  <p class="fade show" style="transition-delay:.2s">
     Before anything else,<br>
-    I need to ask you something.
+    there’s something I need to ask you.
   </p>
 
   <!-- QUESTION -->
-  <div class="card" id="question">
-    <p style="font-size:1.15rem;">
+  <div class="card fade show" style="transition-delay:.4s" id="question">
+    <p style="font-size:1.15rem">
       Do you consider me<br>
       your best friend?
     </p>
 
     <div class="buttons">
-      <button class="yes" onclick="answerYes()">Yes 💙</button>
-      <button class="no" id="noBtn" onclick="answerNo()">No 🙄</button>
+      <button class="yes" onclick="yes()">Yes 💙</button>
+      <button class="no" id="noBtn" onclick="no()">No 🙄</button>
     </div>
   </div>
 
   <!-- REVEAL -->
   <div class="hidden" id="reveal">
 
-    <div class="card">
-      <h1 style="color:#f472b6;">🎂 Happy Birthday</h1>
+    <div class="card fade">
+      <h1 class="glow">🎂 Happy Birthday</h1>
       <p>
         I knew it 😌<br><br>
         Today isn’t just your birthday.<br>
-        It’s a reminder of how special you are.
+        It’s the day the world got someone rare.
       </p>
     </div>
 
-    <div class="card">
+    <div class="card fade">
       <p>
         Dear <strong>[Her Name]</strong>,<br><br>
-        You turn moments into memories without trying.<br>
-        And these are some of my favourites 🤍
+        Some people create memories.<br>
+        You create feelings.<br><br>
+        And these moments…<br>
+        they matter more than you know 🤍
       </p>
     </div>
 
-    <!-- SWIPE MEMORIES -->
-    <div class="swipe-container">
+    <!-- SWIPE -->
+    <div class="swipe fade">
       <div class="slide"><img src="images/1.jpg"></div>
       <div class="slide"><img src="images/2.jpg"></div>
       <div class="slide"><img src="images/3.jpg"></div>
       <div class="slide"><img src="images/4.jpg"></div>
 
-      <!-- VIDEO LAST -->
       <div class="slide">
         <video controls>
           <source src="images/memory.mp4" type="video/mp4">
@@ -192,44 +207,48 @@ footer {
       </div>
     </div>
 
-    <p class="hint">Swipe → for memories ✨</p>
+    <p class="hint fade">Swipe slowly →</p>
 
-    <div class="card">
+    <div class="card fade">
       <p>
-        This page will always stay here.<br>
-        Just like these memories…<br>
-        and me 🤍
+        This page will always stay.<br>
+        Whenever you open it,<br>
+        I hope it reminds you<br>
+        how loved you are 🤍
       </p>
     </div>
 
   </div>
 
   <footer>
-    Made with love, time, and too many emotions ✨
+    Made with patience, feelings, and a lot of thought ✨
   </footer>
 
 </div>
 
 <script>
-let noClicks = 0;
+let noCount=0;
 
-function answerNo() {
-  noClicks++;
-  const noBtn = document.getElementById("noBtn");
-
-  if (noClicks === 1) {
-    noBtn.innerText = "Think again 😏";
-  } else if (noClicks === 2) {
-    noBtn.innerText = "You know the answer 😌";
-  } else {
-    answerYes();
-  }
+function no(){
+  const n=document.getElementById("noBtn");
+  noCount++;
+  if(noCount===1)n.innerText="Try again 😏";
+  else if(noCount===2)n.innerText="You know better 😌";
+  else yes();
 }
 
-function answerYes() {
-  document.getElementById("question").style.display = "none";
-  document.getElementById("reveal").style.display = "block";
-  document.getElementById("reveal").scrollIntoView({ behavior: "smooth" });
+function yes(){
+  document.getElementById("question").remove();
+  const r=document.getElementById("reveal");
+  r.classList.remove("hidden");
+
+  setTimeout(()=>{
+    document.querySelectorAll(".fade").forEach((el,i)=>{
+      setTimeout(()=>el.classList.add("show"),i*250);
+    });
+  },200);
+
+  r.scrollIntoView({behavior:"smooth"});
 }
 </script>
 
