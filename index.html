@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,6 +17,7 @@
 body {
   background: linear-gradient(180deg, #0f172a, #020617);
   color: #e5e7eb;
+  overflow-x: hidden;
 }
 
 .container {
@@ -29,7 +31,6 @@ h1 {
   font-size: 2.2rem;
   color: #a5b4fc;
   text-align: center;
-  animation: fadeUp 1s ease forwards;
 }
 
 p {
@@ -48,7 +49,7 @@ p {
   margin-top: 45px;
   border: 1px solid rgba(255,255,255,0.12);
   backdrop-filter: blur(10px);
-  animation: fadeUp 1.2s ease forwards;
+  animation: fadeUp 1s ease forwards;
 }
 
 /* BUTTONS */
@@ -66,7 +67,7 @@ button {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .yes {
@@ -83,43 +84,51 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* HIDDEN SECTIONS */
 .hidden {
   display: none;
 }
 
-/* GALLERY */
-.gallery {
+/* SWIPE GALLERY */
+.swipe-container {
   margin-top: 40px;
-  display: grid;
-  gap: 25px;
+  overflow-x: auto;
+  display: flex;
+  gap: 20px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
 
-.gallery img {
+.slide {
+  min-width: 100%;
+  scroll-snap-align: center;
+}
+
+.slide img,
+.slide video {
   width: 100%;
-  border-radius: 20px;
-  border: 2px solid rgba(255,255,255,0.12);
-  animation: fadeUp 1s ease forwards;
+  border-radius: 22px;
+  border: 2px solid rgba(255,255,255,0.15);
+}
+
+/* HINT */
+.hint {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #94a3b8;
 }
 
 /* FOOTER */
 footer {
-  margin-top: 100px;
+  margin-top: 90px;
   text-align: center;
   color: #94a3b8;
   font-size: 0.9rem;
 }
 
-/* ANIMATIONS */
+/* ANIMATION */
 @keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
@@ -150,10 +159,11 @@ footer {
 
   <!-- REVEAL -->
   <div class="hidden" id="reveal">
+
     <div class="card">
       <h1 style="color:#f472b6;">🎂 Happy Birthday</h1>
       <p>
-        I had a feeling you’d say yes 😌<br><br>
+        I knew it 😌<br><br>
         Today isn’t just your birthday.<br>
         It’s a reminder of how special you are.
       </p>
@@ -162,32 +172,40 @@ footer {
     <div class="card">
       <p>
         Dear <strong>[Her Name]</strong>,<br><br>
-        You make life lighter just by being in it.<br>
-        The laughs, the talks, the memories —<br>
-        they mean more than you know.
+        You turn moments into memories without trying.<br>
+        And these are some of my favourites 🤍
       </p>
     </div>
 
-    <!-- GALLERY -->
-    <div class="gallery">
-      <img src="images/1.jpg">
-      <img src="images/2.jpg">
-      <img src="images/3.jpg">
-      <img src="images/4.jpg">
+    <!-- SWIPE MEMORIES -->
+    <div class="swipe-container">
+      <div class="slide"><img src="images/1.jpg"></div>
+      <div class="slide"><img src="images/2.jpg"></div>
+      <div class="slide"><img src="images/3.jpg"></div>
+      <div class="slide"><img src="images/4.jpg"></div>
+
+      <!-- VIDEO LAST -->
+      <div class="slide">
+        <video controls>
+          <source src="images/memory.mp4" type="video/mp4">
+        </video>
+      </div>
     </div>
+
+    <p class="hint">Swipe → for memories ✨</p>
 
     <div class="card">
       <p>
-        These moments aren’t just photos.<br>
-        They’re pieces of time I’ll always keep 🤍<br><br>
-        This page will stay.<br>
-        Just like these memories.
+        This page will always stay here.<br>
+        Just like these memories…<br>
+        and me 🤍
       </p>
     </div>
+
   </div>
 
   <footer>
-    Made with more effort than you’ll ever know ✨
+    Made with love, time, and too many emotions ✨
   </footer>
 
 </div>
@@ -200,9 +218,9 @@ function answerNo() {
   const noBtn = document.getElementById("noBtn");
 
   if (noClicks === 1) {
-    noBtn.innerText = "Are you sure? 😏";
+    noBtn.innerText = "Think again 😏";
   } else if (noClicks === 2) {
-    noBtn.innerText = "Okay stop joking 😂";
+    noBtn.innerText = "You know the answer 😌";
   } else {
     answerYes();
   }
