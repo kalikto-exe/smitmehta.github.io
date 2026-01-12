@@ -1,242 +1,235 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For You 🤍</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+body{
+  height:100vh;
+  overflow:hidden;
+  font-family:'Inter',sans-serif;
+  background:radial-gradient(circle at top,#0f2027,#000);
+  color:#fff;
 }
-
-html {
-  scroll-behavior: smooth;
+section{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 1s ease;
 }
-
-body {
-  font-family: 'Inter', sans-serif;
-  background: radial-gradient(circle at top, #0f2027, #000);
-  color: #fff;
-  overflow-x: hidden;
+section.active{
+  opacity:1;
+  pointer-events:auto;
 }
-
-/* ---------- Global ---------- */
-section {
-  min-height: 100vh;
-  padding: 60px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.card{
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(20px);
+  border-radius:30px;
+  padding:35px;
+  width:90%;
+  max-width:360px;
+  text-align:center;
+  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  animation:rise 1.2s ease;
 }
-
-.card {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(18px);
-  border-radius: 26px;
-  padding: 30px;
-  max-width: 360px;
-  width: 100%;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
-  animation: fadeUp 1.2s ease forwards;
-  opacity: 0;
+@keyframes rise{
+  from{transform:translateY(40px);opacity:0}
+  to{transform:translateY(0);opacity:1}
 }
-
-@keyframes fadeUp {
-  from {
-    transform: translateY(40px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+h1,h2{
+  font-family:'Playfair Display',serif;
+  margin-bottom:15px;
 }
-
-h1, h2 {
-  font-family: 'Playfair Display', serif;
-  text-align: center;
+p{
+  font-size:15px;
+  line-height:1.7;
+  opacity:.95;
 }
-
-h1 {
-  font-size: 28px;
-  margin-bottom: 20px;
+button{
+  margin-top:25px;
+  padding:14px;
+  width:100%;
+  border:none;
+  border-radius:40px;
+  font-size:14px;
+  cursor:pointer;
 }
-
-p {
-  font-size: 15px;
-  line-height: 1.7;
-  text-align: center;
-  opacity: 0.95;
+.primary{
+  background:linear-gradient(135deg,#fff,#ddd);
+  color:#000;
 }
-
-/* ---------- Button ---------- */
-.btn {
-  margin-top: 30px;
-  width: 100%;
-  padding: 14px;
-  border-radius: 40px;
-  border: none;
-  font-size: 15px;
-  background: linear-gradient(135deg, #ffffff, #dcdcdc);
-  color: #000;
-  cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease;
+.choice{
+  display:flex;
+  gap:15px;
 }
-
-.btn:active {
-  transform: scale(0.96);
+.choice button{
+  flex:1;
 }
-
-/* ---------- Yes / No ---------- */
-.choice {
-  display: flex;
-  gap: 15px;
-  margin-top: 25px;
+.no{
+  background:rgba(255,255,255,.15);
+  color:#fff;
+  position:relative;
 }
-
-.choice button {
-  flex: 1;
-  padding: 12px;
-  border-radius: 30px;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
+.slider{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
 }
-
-.yes {
-  background: #fff;
-  color: #000;
+.slider::-webkit-scrollbar{display:none}
+.slide{
+  flex:0 0 100%;
+  scroll-snap-align:center;
 }
-
-.no {
-  background: rgba(255,255,255,0.15);
-  color: #fff;
+.slide img{
+  width:100%;
+  border-radius:22px;
 }
-
-/* ---------- Slider ---------- */
-.slider {
-  display: flex;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  gap: 16px;
+video{
+  width:100%;
+  margin-top:20px;
+  border-radius:22px;
 }
-
-.slider::-webkit-scrollbar {
-  display: none;
+.handwritten{
+  font-family:'Pacifico',cursive;
+  font-size:20px;
+  line-height:1.8;
 }
-
-.slide {
-  flex: 0 0 100%;
-  scroll-snap-align: center;
+.heart{
+  position:fixed;
+  bottom:-20px;
+  color:#ff6b81;
+  animation:float 8s linear infinite;
+  font-size:18px;
 }
-
-.slide img {
-  width: 100%;
-  border-radius: 22px;
+@keyframes float{
+  from{transform:translateY(0);opacity:1}
+  to{transform:translateY(-120vh);opacity:0}
 }
-
-/* ---------- Video ---------- */
-video {
-  width: 100%;
-  border-radius: 22px;
-  margin-top: 20px;
+.confetti{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
 }
-
-/* ---------- Footer text ---------- */
-.footer {
-  font-size: 13px;
-  opacity: 0.6;
-  margin-top: 20px;
+.confetti span{
+  position:absolute;
+  width:8px;height:8px;
+  background:hsl(var(--h),80%,60%);
+  animation:fall 2.5s ease forwards;
+}
+@keyframes fall{
+  to{transform:translateY(100vh) rotate(360deg);opacity:0}
 }
 </style>
 </head>
 
 <body>
 
-<!-- INTRO -->
-<section>
+<section class="active">
   <div class="card">
     <h1>Hey…</h1>
-    <p>
-      Some things are not said loudly.<br>
-      They are felt… slowly.
-    </p>
-    <button class="btn" onclick="next()">Okay, show me</button>
+    <p>This isn’t something you scroll through.<br>This is something you experience.</p>
+    <button class="primary" onclick="next()">Okay…</button>
   </div>
 </section>
 
-<!-- MESSAGE -->
 <section>
   <div class="card">
-    <p>
-      You create feelings.<br><br>
-      And these moments…<br>
-      they matter more than you know 🤍
-    </p>
+    <p>You create feelings.<br><br>And these moments…<br>they matter more than you know 🤍</p>
+    <button class="primary" onclick="next()">Continue</button>
   </div>
 </section>
 
-<!-- FUN QUESTION -->
 <section>
   <div class="card">
-    <p>
-      Quick question though 👀<br><br>
-      Do you consider me your best friend?
-    </p>
+    <p>Important question 😌<br><br>Do you consider me your best friend?</p>
     <div class="choice">
-      <button class="yes" onclick="forceYes()">Yes</button>
-      <button class="no" onclick="forceYes()">No</button>
+      <button class="primary" onclick="yes()">Yes</button>
+      <button class="no" id="noBtn">No</button>
     </div>
   </div>
 </section>
 
-<!-- PHOTOS -->
 <section>
   <div class="card">
-    <h2>Us. Always.</h2>
-    <p style="margin-bottom:20px;">Swipe slowly →</p>
-
+    <h2>Us.</h2>
+    <p>Swipe slowly →</p>
     <div class="slider">
       <div class="slide"><img src="images/1.jpg"></div>
       <div class="slide"><img src="images/2.jpg"></div>
       <div class="slide"><img src="images/3.jpg"></div>
       <div class="slide"><img src="images/4.jpg"></div>
     </div>
+    <button class="primary" onclick="next()">One last thing</button>
   </div>
 </section>
 
-<!-- VIDEO -->
 <section>
   <div class="card">
-    <p>
-      And this…<br>
-      is something I wanted you to feel.
-    </p>
-
+    <p>This… is from my heart.</p>
     <video controls playsinline>
       <source src="video.mp4" type="video/mp4">
     </video>
-
-    <div class="footer">
-      Made with feelings, not shortcuts 🤍
-    </div>
+    <p class="handwritten" id="note"></p>
   </div>
 </section>
 
-<script>
-function next() {
-  window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
-}
+<div class="confetti" id="confetti"></div>
 
-function forceYes() {
-  alert("Wrong answer 😌\nBut I’ll take it as YES 🤍");
+<script>
+let current=0;
+const sections=document.querySelectorAll('section');
+function next(){
+  sections[current].classList.remove('active');
+  current++;
+  sections[current].classList.add('active');
+}
+function yes(){
+  confetti();
   next();
 }
+const noBtn=document.getElementById('noBtn');
+noBtn.onmouseover=()=>{
+  noBtn.style.transform=`translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
+}
+function confetti(){
+  const c=document.getElementById('confetti');
+  for(let i=0;i<120;i++){
+    let s=document.createElement('span');
+    s.style.left=Math.random()*100+'%';
+    s.style.top='-10px';
+    s.style.setProperty('--h',Math.random()*360);
+    c.appendChild(s);
+    setTimeout(()=>s.remove(),2500);
+  }
+}
+const noteText="I don’t know how to say this simply…\nBut you matter to me more than words.\nAnd I’ll always choose you 🤍";
+let i=0;
+setTimeout(()=>{
+  const n=document.getElementById('note');
+  const t=setInterval(()=>{
+    n.textContent+=noteText[i++];
+    if(i>=noteText.length)clearInterval(t);
+  },60);
+},2000);
+setInterval(()=>{
+  const h=document.createElement('div');
+  h.className='heart';
+  h.style.left=Math.random()*100+'%';
+  h.textContent='❤';
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),8000);
+},600);
 </script>
 
 </body>
