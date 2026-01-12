@@ -1,254 +1,241 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Just wait…</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For You 🤍</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
 <style>
-:root{
-  --pink:#f9a8d4;
-  --lav:#c7d2fe;
-  --blue:#7dd3fc;
-  --bg1:#020617;
-  --bg2:#0f172a;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-  background:
-    radial-gradient(120% 120% at 50% -20%, #1e1b4b 0%, transparent 60%),
-    linear-gradient(180deg,var(--bg1),var(--bg2));
-  color:#e5e7eb;
-  min-height:100vh;
-  overflow-x:hidden;
+body {
+  font-family: 'Inter', sans-serif;
+  background: radial-gradient(circle at top, #0f2027, #000);
+  color: #fff;
+  overflow-x: hidden;
 }
 
-.container{
-  max-width:420px;
-  margin:auto;
-  padding:80px 20px 140px;
+/* ---------- Global ---------- */
+section {
+  min-height: 100vh;
+  padding: 60px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.fade{
-  opacity:0;
-  transform:translateY(24px);
-  transition:1s ease;
+.card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+  border-radius: 26px;
+  padding: 30px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  animation: fadeUp 1.2s ease forwards;
+  opacity: 0;
 }
 
-.fade.show{
-  opacity:1;
-  transform:translateY(0);
+@keyframes fadeUp {
+  from {
+    transform: translateY(40px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
-h1{
-  font-size:2.2rem;
-  text-align:center;
-  color:var(--lav);
+h1, h2 {
+  font-family: 'Playfair Display', serif;
+  text-align: center;
 }
 
-p{
-  margin-top:18px;
-  line-height:1.8;
-  text-align:center;
-  color:#cbd5f5;
-  font-size:1.05rem;
+h1 {
+  font-size: 28px;
+  margin-bottom: 20px;
 }
 
-.card{
-  margin-top:50px;
-  padding:32px;
-  border-radius:26px;
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.12);
-  backdrop-filter:blur(14px);
+p {
+  font-size: 15px;
+  line-height: 1.7;
+  text-align: center;
+  opacity: 0.95;
 }
 
-.buttons{
-  display:flex;
-  gap:14px;
-  margin-top:28px;
-  justify-content:center;
+/* ---------- Button ---------- */
+.btn {
+  margin-top: 30px;
+  width: 100%;
+  padding: 14px;
+  border-radius: 40px;
+  border: none;
+  font-size: 15px;
+  background: linear-gradient(135deg, #ffffff, #dcdcdc);
+  color: #000;
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
 }
 
-button{
-  padding:14px 28px;
-  border-radius:999px;
-  border:none;
-  font-size:1rem;
-  font-weight:600;
-  cursor:pointer;
-  transition:.25s ease;
+.btn:active {
+  transform: scale(0.96);
 }
 
-.yes{
-  background:linear-gradient(135deg,var(--blue),var(--lav));
-  color:#020617;
+/* ---------- Yes / No ---------- */
+.choice {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
 }
 
-.no{
-  background:rgba(255,255,255,0.14);
-  color:#e5e7eb;
+.choice button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 30px;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
 }
 
-button:active{
-  transform:scale(.95);
+.yes {
+  background: #fff;
+  color: #000;
 }
 
-.hidden{display:none}
-
-/* Swipe gallery */
-.swipe{
-  display:flex;
-  overflow-x:auto;
-  gap:20px;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
-  margin-top:35px;
+.no {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
 }
 
-.slide{
-  min-width:100%;
-  scroll-snap-align:center;
+/* ---------- Slider ---------- */
+.slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 16px;
 }
 
-.slide img,
-.slide video{
-  width:100%;
-  border-radius:26px;
-  border:2px solid rgba(255,255,255,0.15);
+.slider::-webkit-scrollbar {
+  display: none;
 }
 
-.hint{
-  margin-top:14px;
-  font-size:.85rem;
-  color:#94a3b8;
-  text-align:center;
+.slide {
+  flex: 0 0 100%;
+  scroll-snap-align: center;
 }
 
-footer{
-  margin-top:120px;
-  text-align:center;
-  font-size:.85rem;
-  color:#94a3b8;
+.slide img {
+  width: 100%;
+  border-radius: 22px;
 }
 
-/* soft floating glow */
-.glow{
-  color:var(--pink);
-  text-shadow:0 0 20px rgba(249,168,212,.4);
+/* ---------- Video ---------- */
+video {
+  width: 100%;
+  border-radius: 22px;
+  margin-top: 20px;
+}
+
+/* ---------- Footer text ---------- */
+.footer {
+  font-size: 13px;
+  opacity: 0.6;
+  margin-top: 20px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-  <!-- INTRO -->
-  <h1 class="fade show">Wait…</h1>
-  <p class="fade show" style="transition-delay:.2s">
-    Before anything else,<br>
-    there’s something I need to ask you.
-  </p>
-
-  <!-- QUESTION -->
-  <div class="card fade show" style="transition-delay:.4s" id="question">
-    <p style="font-size:1.15rem">
-      Do you consider me<br>
-      your best friend?
+<!-- INTRO -->
+<section>
+  <div class="card">
+    <h1>Hey…</h1>
+    <p>
+      Some things are not said loudly.<br>
+      They are felt… slowly.
     </p>
+    <button class="btn" onclick="next()">Okay, show me</button>
+  </div>
+</section>
 
-    <div class="buttons">
-      <button class="yes" onclick="yes()">Yes 💙</button>
-      <button class="no" id="noBtn" onclick="no()">No 🙄</button>
+<!-- MESSAGE -->
+<section>
+  <div class="card">
+    <p>
+      You create feelings.<br><br>
+      And these moments…<br>
+      they matter more than you know 🤍
+    </p>
+  </div>
+</section>
+
+<!-- FUN QUESTION -->
+<section>
+  <div class="card">
+    <p>
+      Quick question though 👀<br><br>
+      Do you consider me your best friend?
+    </p>
+    <div class="choice">
+      <button class="yes" onclick="forceYes()">Yes</button>
+      <button class="no" onclick="forceYes()">No</button>
     </div>
   </div>
+</section>
 
-  <!-- REVEAL -->
-  <div class="hidden" id="reveal">
+<!-- PHOTOS -->
+<section>
+  <div class="card">
+    <h2>Us. Always.</h2>
+    <p style="margin-bottom:20px;">Swipe slowly →</p>
 
-    <div class="card fade">
-      <h1 class="glow">🎂 Happy Birthday</h1>
-      <p>
-        I knew it 😌<br><br>
-        Today isn’t just your birthday.<br>
-        It’s the day the world got someone rare.
-      </p>
-    </div>
-
-    <div class="card fade">
-      <p>
-        Dear <strong>[Her Name]</strong>,<br><br>
-        Some people create memories.<br>
-        You create feelings.<br><br>
-        And these moments…<br>
-        they matter more than you know 🤍
-      </p>
-    </div>
-
-    <!-- SWIPE -->
-    <div class="swipe fade">
+    <div class="slider">
       <div class="slide"><img src="images/1.jpg"></div>
       <div class="slide"><img src="images/2.jpg"></div>
       <div class="slide"><img src="images/3.jpg"></div>
       <div class="slide"><img src="images/4.jpg"></div>
-
-      <div class="slide">
-        <video controls>
-          <source src="images/memory.mp4" type="video/mp4">
-        </video>
-      </div>
     </div>
-
-    <p class="hint fade">Swipe slowly →</p>
-
-    <div class="card fade">
-      <p>
-        This page will always stay.<br>
-        Whenever you open it,<br>
-        I hope it reminds you<br>
-        how loved you are 🤍
-      </p>
-    </div>
-
   </div>
+</section>
 
-  <footer>
-    Made with patience, feelings, and a lot of thought ✨
-  </footer>
+<!-- VIDEO -->
+<section>
+  <div class="card">
+    <p>
+      And this…<br>
+      is something I wanted you to feel.
+    </p>
 
-</div>
+    <video controls playsinline>
+      <source src="video.mp4" type="video/mp4">
+    </video>
+
+    <div class="footer">
+      Made with feelings, not shortcuts 🤍
+    </div>
+  </div>
+</section>
 
 <script>
-let noCount=0;
-
-function no(){
-  const n=document.getElementById("noBtn");
-  noCount++;
-  if(noCount===1)n.innerText="Try again 😏";
-  else if(noCount===2)n.innerText="You know better 😌";
-  else yes();
+function next() {
+  window.scrollBy({ top: window.innerHeight, behavior: 'smooth' });
 }
 
-function yes(){
-  document.getElementById("question").remove();
-  const r=document.getElementById("reveal");
-  r.classList.remove("hidden");
-
-  setTimeout(()=>{
-    document.querySelectorAll(".fade").forEach((el,i)=>{
-      setTimeout(()=>el.classList.add("show"),i*250);
-    });
-  },200);
-
-  r.scrollIntoView({behavior:"smooth"});
+function forceYes() {
+  alert("Wrong answer 😌\nBut I’ll take it as YES 🤍");
+  next();
 }
 </script>
 
