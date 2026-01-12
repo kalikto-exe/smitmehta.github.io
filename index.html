@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>For You 🤍</title>
+<title>Just for You 🤍</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&family=Pacifico&display=swap" rel="stylesheet">
 
@@ -14,14 +14,14 @@ body{
   overflow:hidden;
   font-family:'Inter',sans-serif;
   color:#fff;
-  background:radial-gradient(circle at top,#1a2a3a,#000);
+  background:radial-gradient(circle at top,#101820,#000);
 }
 .bg{
   position:fixed;inset:0;
   background:linear-gradient(120deg,#1f3c88,#000,#3a0ca3);
   background-size:400% 400%;
-  animation:aurora 18s ease infinite;
-  z-index:-2;
+  animation:aurora 20s ease infinite;
+  z-index:-1;
 }
 @keyframes aurora{
   0%{background-position:0% 50%}
@@ -54,14 +54,11 @@ section.active{
   animation:enter 1.2s ease;
 }
 @keyframes enter{
-  from{transform:scale(.9) translateY(40px);opacity:0}
-  to{transform:scale(1) translateY(0);opacity:1}
+  from{transform:translateY(40px) scale(.95);opacity:0}
+  to{transform:translateY(0) scale(1);opacity:1}
 }
-h1,h2{
-  font-family:'Playfair Display',serif;
-  margin-bottom:15px;
-}
-p{font-size:15px;line-height:1.7}
+h1,h2{font-family:'Playfair Display',serif;margin-bottom:15px}
+p{font-size:15px;line-height:1.7;opacity:.95}
 button{
   margin-top:25px;
   padding:14px;
@@ -81,6 +78,8 @@ button{
   background:rgba(255,255,255,.15);
   color:#fff;
 }
+
+/* Slider */
 .slider{
   display:flex;
   gap:16px;
@@ -102,17 +101,19 @@ button{
   position:relative;
   width:260px;
   height:170px;
-  background:#f2f2f2;
+  background:#f1f1f1;
   margin:20px auto;
   border-radius:10px;
   cursor:pointer;
 }
-.envelope:before{
-  content:'';
+.envelope::after{
+  content:"Tap to open ✉️";
   position:absolute;
-  inset:0;
-  background:linear-gradient(135deg,#ddd,#fff);
-  clip-path:polygon(0 0,100% 0,50% 60%);
+  bottom:-28px;
+  left:50%;
+  transform:translateX(-50%);
+  color:#ccc;
+  font-size:13px;
 }
 .letter{
   position:absolute;
@@ -162,27 +163,26 @@ video{
 </head>
 
 <body>
-
 <div class="bg"></div>
 
 <section class="active">
   <div class="card">
     <h1>Hey…</h1>
-    <p>This isn’t something you scroll.<br>This is something you feel.</p>
-    <button class="primary" onclick="next()">Begin</button>
+    <p>This is not a normal website.<br>This is something made slowly.</p>
+    <button class="primary" onclick="next()">Start</button>
   </div>
 </section>
 
 <section>
   <div class="card">
-    <p>Moments like these…<br>they stay forever 🤍</p>
+    <p>Some people scroll.<br>Some people feel.<br>I hope you feel this 🤍</p>
     <button class="primary" onclick="next()">Continue</button>
   </div>
 </section>
 
 <section>
   <div class="card">
-    <p>One honest question…<br><br>Do you consider me your best friend?</p>
+    <p>Be honest 😌<br><br>Do you consider me your best friend?</p>
     <div class="choice">
       <button class="primary" onclick="next()">Yes</button>
       <button class="no" id="noBtn">No</button>
@@ -192,37 +192,44 @@ video{
 
 <section>
   <div class="card">
-    <p>Our memories ✨</p>
+    <p>Our memories ✨<br><small>(Swipe to see →)</small></p>
     <div class="slider">
       <div class="slide"><img src="images/1.jpg"></div>
       <div class="slide"><img src="images/2.jpg"></div>
       <div class="slide"><img src="images/3.jpg"></div>
       <div class="slide"><img src="images/4.jpg"></div>
     </div>
-    <button class="primary" onclick="next()">Open something special</button>
+    <button class="primary" onclick="next()">Open the letter</button>
   </div>
 </section>
 
 <section>
   <div class="card">
-    <p>For you… ✉️</p>
-    <div class="envelope" onclick="this.classList.add('open');writeNote()">
+    <p>This is for you.</p>
+    <div class="envelope" id="env">
       <div class="letter">
         <div class="handwritten" id="note"></div>
       </div>
     </div>
-    <button class="primary" onclick="next()">One last thing</button>
+    <button class="primary" id="letterBtn" style="display:none" onclick="next()">Continue</button>
   </div>
 </section>
 
 <section>
   <div class="card">
-    <p>This is us.</p>
+    <p>Watch till the end 🎥</p>
     <div class="video-box">
-      <video controls playsinline preload="metadata">
+      <video id="vid" controls playsinline muted preload="metadata">
         <source src="video.mp4" type="video/mp4">
       </video>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <p>You stayed till the end… 🤍</p>
+    <p class="handwritten">This part was only for you.</p>
   </div>
 </section>
 
@@ -237,16 +244,21 @@ function next(){
 document.getElementById('noBtn').onmouseover=e=>{
   e.target.style.transform=`translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
 }
-const text="I wrote this slowly.\nBecause you matter deeply to me.\nThank you for being you.\nAlways 🤍";
+const env=document.getElementById('env');
+const note=document.getElementById('note');
+const btn=document.getElementById('letterBtn');
+const text="I wrote this with intention.\nWith time.\nAnd with care.\nBecause you matter 🤍";
 let i=0;
-function writeNote(){
-  const n=document.getElementById('note');
-  if(i) return;
+env.onclick=()=>{
+  env.classList.add('open');
   const t=setInterval(()=>{
-    n.textContent+=text[i++];
-    if(i>=text.length)clearInterval(t);
+    note.textContent+=text[i++];
+    if(i>=text.length){clearInterval(t);btn.style.display='block'}
   },70);
-}
+};
+const vid=document.getElementById('vid');
+vid.onplay=()=>vid.muted=false;
+vid.onended=()=>next();
 setInterval(()=>{
   const h=document.createElement('div');
   h.className='heart';
@@ -254,7 +266,7 @@ setInterval(()=>{
   h.style.left=Math.random()*100+'%';
   document.body.appendChild(h);
   setTimeout(()=>h.remove(),8000);
-},700);
+},800);
 </script>
 
 </body>
