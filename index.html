@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Just For You 🌙</title>
 
-<title>For You 🌸</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -15,42 +14,32 @@ body{
   font-family:'Inter',sans-serif;
   background:radial-gradient(circle at top,#1b3a3a,#000);
   color:#fff;
-  overflow-x:hidden;
+  overflow:hidden;
 }
 
-/* floating hearts */
-.heart{
+/* SCENES */
+.scene{
   position:fixed;
-  bottom:-20px;
-  font-size:18px;
-  animation:float 8s linear infinite;
-  opacity:.6;
-}
-@keyframes float{
-  to{transform:translateY(-120vh);opacity:0}
-}
-
-/* main card */
-.section{
-  min-height:100vh;
-  display:flex;
+  inset:0;
+  display:none;
   align-items:center;
   justify-content:center;
   padding:24px;
 }
+.scene.active{display:flex}
 
+/* CARD */
 .card{
   width:100%;
   max-width:420px;
-  background:rgba(255,255,255,.06);
-  border-radius:28px;
+  background:rgba(255,255,255,.07);
+  border-radius:30px;
   padding:28px;
   text-align:center;
   box-shadow:0 30px 60px rgba(0,0,0,.6);
-  animation:fadeUp 1.2s ease;
+  animation:enter .8s ease;
 }
-
-@keyframes fadeUp{
+@keyframes enter{
   from{opacity:0;transform:translateY(40px)}
   to{opacity:1;transform:none}
 }
@@ -60,65 +49,79 @@ h1{
   font-size:26px;
   margin-bottom:14px;
 }
-
 p{
   font-size:15px;
-  line-height:1.6;
+  line-height:1.7;
   opacity:.9;
 }
 
-/* bouquet */
-.bouquet{
-  font-size:44px;
-  margin:18px 0;
-  animation:bloom 2s ease infinite alternate;
+button{
+  margin-top:22px;
+  padding:14px 26px;
+  border:none;
+  border-radius:40px;
+  font-size:15px;
+  background:#fff;
+  color:#000;
+  cursor:pointer;
 }
-@keyframes bloom{
+
+/* ENVELOPE */
+.envelope{
+  font-size:64px;
+  cursor:pointer;
+  margin:20px 0;
+}
+.letter{
+  display:none;
+  font-family:'Pacifico',cursive;
+  background:#fff;
+  color:#000;
+  padding:20px;
+  border-radius:16px;
+  margin-top:16px;
+}
+
+/* BOUQUET */
+.bouquet{
+  font-size:54px;
+  margin:20px 0;
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{
   from{transform:scale(.95)}
   to{transform:scale(1.05)}
 }
 
-/* gif fight */
-.fight{
-  width:100%;
-  margin:22px 0;
-}
+/* GIF */
 .fight img{
   width:100%;
-  border-radius:20px;
+  max-width:360px;
+  margin:18px 0;
 }
 
-/* swipe gallery */
+/* GALLERY */
 .gallery{
   display:flex;
+  gap:16px;
   overflow-x:auto;
-  gap:14px;
-  padding:12px 0;
-  scroll-snap-type:x mandatory;
+  margin-top:16px;
 }
 .gallery img{
-  width:75%;
-  border-radius:22px;
-  scroll-snap-align:center;
-  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  width:90%;
+  border-radius:24px;
 }
 .hint{
+  margin-top:10px;
   font-size:13px;
   opacity:.6;
-  margin-top:6px;
 }
 
-/* video */
+/* VIDEO */
 video{
   width:100%;
-  border-radius:22px;
-  margin-top:18px;
-}
-
-/* ending */
-.end{
-  font-size:14px;
-  opacity:.8;
+  aspect-ratio:9/16;
+  border-radius:24px;
   margin-top:18px;
 }
 </style>
@@ -126,70 +129,88 @@ video{
 
 <body>
 
-<!-- floating hearts -->
-<script>
-for(let i=0;i<20;i++){
-  let h=document.createElement('div');
-  h.className='heart';
-  h.innerHTML='💖';
-  h.style.left=Math.random()*100+'vw';
-  h.style.animationDelay=Math.random()*8+'s';
-  document.body.appendChild(h);
-}
-</script>
-
-<!-- SECTION 1 -->
-<div class="section">
+<!-- SCENE 1 : INTRO -->
+<div class="scene active">
   <div class="card">
-    <h1>Hey you 🌙</h1>
+    <h1>Hey 🌙</h1>
     <p>
-      This isn’t just a website.<br>
-      It’s a little piece of how much you matter.
+      This isn’t something you scroll.<br>
+      This is something you go through.
     </p>
+    <button onclick="next()">Continue</button>
   </div>
 </div>
 
-<!-- SECTION 2 bouquet -->
-<div class="section">
+<!-- SCENE 2 : ENVELOPE -->
+<div class="scene">
+  <div class="card">
+    <p>There’s something I didn’t say out loud.</p>
+    <div class="envelope" onclick="openLetter()">✉️</div>
+    <p style="font-size:13px;opacity:.6">Tap the envelope</p>
+
+    <div class="letter" id="letter">
+      I don’t always explain myself well.<br><br>
+      So I made this instead.<br><br>
+      Read slowly.
+    </div>
+
+    <button id="envNext" style="display:none" onclick="next()">Okay</button>
+  </div>
+</div>
+
+<!-- SCENE 3 : BOUQUET -->
+<div class="scene">
   <div class="card">
     <div class="bouquet">💐</div>
     <p>
       A digital bouquet for you.<br><br>
-      These flowers won’t fade,<br>
-      won’t dry,<br>
-      won’t break.<br><br>
-      Just like our friendship.<br>
-      No matter how loud life gets.
+      These flowers won’t fade.<br>
+      They won’t dry.<br>
+      They won’t get ruined.<br><br>
+      Just like our friendship.
     </p>
+    <button onclick="next()">I get it</button>
   </div>
 </div>
 
-<!-- SECTION 3 fight gif -->
-<div class="section">
-  <div class="card">
+<!-- SCENE 4 : FIGHT GIF -->
+<div class="scene">
+  <div class="card fight">
     <p>
       We fight.<br>
       We argue.<br>
-      Sometimes a lot 😤
+      We get annoyed 😤
     </p>
-
-    <div class="fight">
-      <img src="assets/animations/fight.gif" alt="fight gif">
-    </div>
-
+    <img src="assets/animations/fight.gif">
     <p>
-      But we always come back.<br>
-      That’s our thing.
+      But somehow…<br>
+      we always come back.
     </p>
+    <button onclick="next()">Of course</button>
   </div>
 </div>
 
-<!-- SECTION 4 gallery -->
-<div class="section">
+<!-- SCENE 5 : QUESTION -->
+<div class="scene">
   <div class="card">
-    <p>Some memories… 📸</p>
+    <p>
+      Be honest now.<br><br>
+      After everything…<br>
+      do you still consider me your best friend?
+    </p>
+    <button onclick="next()">Yes</button>
+    <button id="noBtn" style="margin-top:12px;background:rgba(255,255,255,.2);color:#fff">
+      No
+    </button>
+  </div>
+</div>
 
-    <div class="gallery">
+<!-- SCENE 6 : PHOTOS -->
+<div class="scene">
+  <div class="card">
+    <p>Some moments explain everything 📸</p>
+
+    <div class="gallery" onscroll="unlockPhotos()">
       <img src="images/1.jpg">
       <img src="images/2.jpg">
       <img src="images/3.jpg">
@@ -199,24 +220,63 @@ for(let i=0;i<20;i++){
     </div>
 
     <div class="hint">← swipe slowly</div>
+    <button id="photoNext" style="display:none" onclick="next()">Continue</button>
   </div>
 </div>
 
-<!-- SECTION 5 video -->
-<div class="section">
+<!-- SCENE 7 : VIDEO -->
+<div class="scene">
   <div class="card">
-    <p>Some moments I never want to forget 🎥</p>
-
-    <video src="images/memory.mp4" controls playsinline></video>
-
-    <div class="end">
-      If you’re watching this,<br>
-      just know…<br>
-      you’re special to me.<br>
-      Always. 🌸
-    </div>
+    <p>Watch this till the end 🎥</p>
+    <video id="vid" controls playsinline>
+      <source src="images/memory.mp4" type="video/mp4">
+    </video>
   </div>
 </div>
+
+<!-- SCENE 8 : END -->
+<div class="scene">
+  <div class="card">
+    <p>If you’re here…</p>
+    <h1 style="margin-top:10px">1.2</h1>
+    <p style="font-family:'Pacifico',cursive;margin-top:14px">
+      You know why.<br>
+      And that’s enough.
+    </p>
+  </div>
+</div>
+
+<script>
+let current = 0;
+const scenes = document.querySelectorAll('.scene');
+
+function next(){
+  scenes[current].classList.remove('active');
+  current++;
+  scenes[current].classList.add('active');
+}
+
+/* Envelope */
+function openLetter(){
+  document.getElementById('letter').style.display='block';
+  document.getElementById('envNext').style.display='block';
+}
+
+/* No button tease */
+document.getElementById('noBtn').onmouseover = e=>{
+  e.target.textContent = "Nice try 😌";
+  e.target.style.transform =
+    `translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
+};
+
+/* Photos unlock */
+function unlockPhotos(){
+  document.getElementById('photoNext').style.display='block';
+}
+
+/* Video unlock */
+document.getElementById('vid').onended = ()=> next();
+</script>
 
 </body>
 </html>
