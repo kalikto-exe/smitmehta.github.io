@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Just Us</title>
+<title>Just This</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&family=Pacifico&display=swap" rel="stylesheet">
 
@@ -13,19 +13,21 @@ body{
   height:100vh;
   overflow:hidden;
   font-family:'Inter',sans-serif;
-  background:black;
+  background:#000;
   color:#fff;
 }
 
 /* Background */
 .bg{
-  position:fixed; inset:0;
-  background:radial-gradient(circle at top,#111,#000);
-  animation:fadeBg 10s ease infinite alternate;
+  position:fixed;inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, #111 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, #0b0b0b 0%, transparent 40%);
+  animation:bgPulse 10s ease-in-out infinite alternate;
   z-index:-1;
 }
-@keyframes fadeBg{
-  from{opacity:.9}
+@keyframes bgPulse{
+  from{opacity:.85}
   to{opacity:1}
 }
 
@@ -38,7 +40,7 @@ section{
   justify-content:center;
   opacity:0;
   pointer-events:none;
-  transition:opacity 1s ease;
+  transition:opacity 1.2s ease;
 }
 section.active{
   opacity:1;
@@ -50,19 +52,19 @@ section.active{
   width:90%;
   max-width:380px;
   background:rgba(255,255,255,.06);
-  backdrop-filter:blur(16px);
+  backdrop-filter:blur(18px);
   border-radius:28px;
   padding:32px;
   text-align:center;
-  box-shadow:0 30px 80px rgba(0,0,0,.6);
-  animation:enter 1s ease;
+  box-shadow:0 40px 100px rgba(0,0,0,.7);
+  animation:enter 1.2s ease;
 }
 @keyframes enter{
-  from{transform:translateY(30px);opacity:0}
+  from{transform:translateY(40px);opacity:0}
   to{transform:translateY(0);opacity:1}
 }
 
-h1,h2{
+h1{
   font-family:'Playfair Display',serif;
   margin-bottom:14px;
 }
@@ -72,7 +74,7 @@ p{
   opacity:.95;
 }
 
-/* Button */
+/* Buttons */
 button{
   margin-top:22px;
   padding:14px;
@@ -96,7 +98,7 @@ button{
 }
 
 /* Fight GIF */
-.fight-scene img{
+.fight img{
   width:260px;
   max-width:90%;
   animation:float 3s ease-in-out infinite;
@@ -146,9 +148,9 @@ button{
   position:relative;
 }
 .envelope::after{
-  content:"Tap the envelope ✉️";
+  content:"Tap the envelope";
   position:absolute;
-  bottom:-28px;
+  bottom:-26px;
   left:50%;
   transform:translateX(-50%);
   font-size:13px;
@@ -195,25 +197,37 @@ video{
 <!-- INTRO -->
 <section class="active">
   <div class="card">
+    <p style="opacity:.7;font-size:14px">This is just for you.</p>
     <h1>Hey.</h1>
-    <p>This is not a normal website.<br>This is something personal.</p>
-    <button class="primary" onclick="next()">Enter</button>
+    <p>
+      I didn’t know how to say things properly.<br>
+      So I built this instead.
+    </p>
+    <button class="primary" onclick="next()">Okay</button>
   </div>
 </section>
 
-<!-- FIGHT GIF -->
+<!-- FIGHT -->
 <section>
-  <div class="card fight-scene">
+  <div class="card fight">
     <img src="assets/animations/fight.gif">
-    <p style="margin-top:14px">We fight.<br>And we know it.</p>
-    <button class="primary" onclick="next()">But still…</button>
+    <p style="margin-top:14px">
+      We fight.<br>
+      Over nonsense.<br>
+      And then act like nothing happened.
+    </p>
+    <button class="primary" onclick="next()">You know it’s true</button>
   </div>
 </section>
 
 <!-- QUESTION -->
 <section>
   <div class="card">
-    <p>After all of that…<br>do you still consider me your best friend?</p>
+    <p>
+      Be honest for a second.<br><br>
+      After all this chaos…<br>
+      do you still consider me your best friend?
+    </p>
     <div class="choice">
       <button class="primary" onclick="next()">Yes</button>
       <button class="no" id="noBtn">No</button>
@@ -221,10 +235,24 @@ video{
   </div>
 </section>
 
+<!-- DIRECT MESSAGE -->
+<section>
+  <div class="card">
+    <p>
+      I already knew your answer.<br><br>
+      I just wanted to hear it anyway.
+    </p>
+    <button class="primary" onclick="next()">Continue</button>
+  </div>
+</section>
+
 <!-- MEMORIES -->
 <section>
   <div class="card">
-    <p>Some moments explain everything.</p>
+    <p>
+      These aren’t just photos.<br>
+      They’re small proofs that we existed like this.
+    </p>
     <div class="slider">
       <div class="slide"><img src="images/1.jpg"></div>
       <div class="slide"><img src="images/2.jpg"></div>
@@ -234,19 +262,21 @@ video{
       <div class="slide"><img src="images/6.jpg"></div>
     </div>
     <p style="margin-top:10px;opacity:.6;font-size:13px">Swipe slowly →</p>
-    <button class="primary" onclick="next()">Read something</button>
+    <button class="primary" onclick="next()">There’s more</button>
   </div>
 </section>
 
-<!-- CALM AVATARS -->
+<!-- CALM -->
 <section>
   <div class="card">
-    <p>No matter what…</p>
+    <p>
+      No matter how loud things get…<br>
+      this part stays quiet.
+    </p>
     <div class="avatars">
       <img src="assets/avatars/me.jpg" class="avatar">
       <img src="assets/avatars/her.jpg" class="avatar">
     </div>
-    <p style="margin-top:14px">…we always come back.</p>
     <button class="primary" onclick="next()">One last thing</button>
   </div>
 </section>
@@ -254,7 +284,10 @@ video{
 <!-- LETTER -->
 <section>
   <div class="card">
-    <p>This needed to be said.</p>
+    <p>
+      I won’t say this out loud.<br>
+      So read it instead.
+    </p>
     <div class="envelope" id="env">
       <div class="letter">
         <div class="handwritten" id="note"></div>
@@ -278,10 +311,11 @@ video{
 <!-- SECRET -->
 <section>
   <div class="card">
-    <p>Some things don’t need explaining.</p>
+    <p style="opacity:.7">If you’re still here…</p>
     <h1 style="margin-top:10px">1.2</h1>
     <p class="handwritten" style="margin-top:14px">
-      If this made sense to you,<br>you already know everything.
+      You know why.<br>
+      And that’s enough.
     </p>
   </div>
 </section>
@@ -295,14 +329,14 @@ function next(){
   sections[current].classList.add('active');
 }
 document.getElementById('noBtn').onmouseover=e=>{
-  e.target.textContent="Try again 😌";
+  e.target.textContent="Nice try 😌";
   e.target.style.transform=`translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
 };
 
 /* Letter typing */
 const env=document.getElementById('env');
 const note=document.getElementById('note');
-const text="We argue.\nWe disappear.\nWe come back.\nAnd somehow…\nwe remain.";
+const text="I don’t know how long this stays.\nOr when you’ll read it.\n\nBut if you smiled even once…\nthat was the point.";
 let i=0;
 env.onclick=()=>{
   if(env.classList.contains('open')) return;
