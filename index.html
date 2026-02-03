@@ -1,281 +1,358 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Just For You 🌙</title>
+<title>Just This</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@300;400&family=Pacifico&display=swap" rel="stylesheet">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
 body{
-  font-family:'Inter',sans-serif;
-  background:radial-gradient(circle at top,#1b3a3a,#000);
-  color:#fff;
-  overflow:hidden;
+  height:100vh;
+  overflow:hidden;
+  font-family:'Inter',sans-serif;
+  background:#000;
+  color:#fff;
 }
 
-/* SCENES */
-.scene{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:24px;
+/* Background */
+.bg{
+  position:fixed;inset:0;
+  background:
+    radial-gradient(circle at 20% 20%, #111 0%, transparent 40%),
+    radial-gradient(circle at 80% 80%, #0b0b0b 0%, transparent 40%);
+  animation:bgPulse 10s ease-in-out infinite alternate;
+  z-index:-1;
 }
-.scene.active{display:flex}
+@keyframes bgPulse{
+  from{opacity:.85}
+  to{opacity:1}
+}
 
-/* CARD */
+/* Sections */
+section{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 1.2s ease;
+}
+section.active{
+  opacity:1;
+  pointer-events:auto;
+}
+
+/* Card */
 .card{
-  width:100%;
-  max-width:420px;
-  background:rgba(255,255,255,.07);
-  border-radius:30px;
-  padding:28px;
-  text-align:center;
-  box-shadow:0 30px 60px rgba(0,0,0,.6);
-  animation:enter .8s ease;
+  width:90%;
+  max-width:380px;
+  background:rgba(255,255,255,.06);
+  backdrop-filter:blur(18px);
+  border-radius:28px;
+  padding:32px;
+  text-align:center;
+  box-shadow:0 40px 100px rgba(0,0,0,.7);
+  animation:enter 1.2s ease;
 }
 @keyframes enter{
-  from{opacity:0;transform:translateY(40px)}
-  to{opacity:1;transform:none}
+  from{transform:translateY(40px);opacity:0}
+  to{transform:translateY(0);opacity:1}
 }
 
 h1{
-  font-family:'Playfair Display',serif;
-  font-size:26px;
-  margin-bottom:14px;
+  font-family:'Playfair Display',serif;
+  margin-bottom:14px;
 }
 p{
-  font-size:15px;
-  line-height:1.7;
-  opacity:.9;
+  font-size:15px;
+  line-height:1.7;
+  opacity:.95;
 }
 
+/* Buttons */
 button{
-  margin-top:22px;
-  padding:14px 26px;
-  border:none;
-  border-radius:40px;
-  font-size:15px;
-  background:#fff;
-  color:#000;
-  cursor:pointer;
+  margin-top:22px;
+  padding:14px;
+  width:100%;
+  border:none;
+  border-radius:40px;
+  font-size:14px;
+  cursor:pointer;
+}
+.primary{
+  background:#fff;
+  color:#000;
+}
+.choice{
+  display:flex;
+  gap:14px;
+}
+.no{
+  background:rgba(255,255,255,.15);
+  color:#fff;
 }
 
-/* ENVELOPE */
+/* Fight GIF */
+.fight img{
+  width:260px;
+  max-width:90%;
+  animation:float 3s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-12px)}
+}
+
+/* Slider */
+.slider{
+  display:flex;
+  gap:16px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+}
+.slider::-webkit-scrollbar{display:none}
+.slide{
+  flex:0 0 100%;
+  scroll-snap-align:center;
+}
+.slide img{
+  width:100%;
+  border-radius:22px;
+}
+
+/* Avatars calm */
+.avatars{
+  display:flex;
+  justify-content:space-between;
+  margin-top:18px;
+}
+.avatar{
+  width:120px;
+  border-radius:20px;
+  opacity:.9;
+}
+
+/* Envelope */
 .envelope{
-  font-size:64px;
-  cursor:pointer;
-  margin:20px 0;
+  width:260px;
+  height:170px;
+  background:#f1f1f1;
+  margin:20px auto;
+  border-radius:10px;
+  cursor:pointer;
+  position:relative;
+}
+.envelope::after{
+  content:"Tap the envelope";
+  position:absolute;
+  bottom:-26px;
+  left:50%;
+  transform:translateX(-50%);
+  font-size:13px;
+  color:#ccc;
 }
 .letter{
-  display:none;
-  font-family:'Pacifico',cursive;
-  background:#fff;
-  color:#000;
-  padding:20px;
-  border-radius:16px;
-  margin-top:16px;
+  position:absolute;
+  bottom:10px;
+  left:10px;
+  right:10px;
+  height:0;
+  background:#fff;
+  border-radius:8px;
+  overflow:hidden;
+  transition:height 1.2s ease;
+}
+.envelope.open .letter{height:220px}
+.handwritten{
+  font-family:'Pacifico',cursive;
+  color:#000;
+  padding:18px;
+  font-size:18px;
+  line-height:1.6;
 }
 
-/* BOUQUET */
-.bouquet{
-  font-size:54px;
-  margin:20px 0;
-  animation:pulse 2s ease-in-out infinite;
+/* Video */
+.video-box{
+  width:100%;
+  aspect-ratio:9/16;
+  border-radius:22px;
+  overflow:hidden;
 }
-@keyframes pulse{
-  from{transform:scale(.95)}
-  to{transform:scale(1.05)}
-}
-
-/* GIF */
-.fight img{
-  width:100%;
-  max-width:360px;
-  margin:18px 0;
-}
-
-/* GALLERY */
-.gallery{
-  display:flex;
-  gap:16px;
-  overflow-x:auto;
-  margin-top:16px;
-}
-.gallery img{
-  width:90%;
-  border-radius:24px;
-}
-.hint{
-  margin-top:10px;
-  font-size:13px;
-  opacity:.6;
-}
-
-/* VIDEO */
 video{
-  width:100%;
-  aspect-ratio:9/16;
-  border-radius:24px;
-  margin-top:18px;
+  width:100%;
+  height:100%;
+  object-fit:cover;
 }
 </style>
 </head>
 
 <body>
+<div class="bg"></div>
 
-<!-- SCENE 1 : INTRO -->
-<div class="scene active">
-  <div class="card">
-    <h1>Hey 🌙</h1>
-    <p>
-      This isn’t something you scroll.<br>
-      This is something you go through.
-    </p>
-    <button onclick="next()">Continue</button>
-  </div>
-</div>
+<!-- INTRO -->
+<section class="active">
+  <div class="card">
+    <p style="opacity:.7;font-size:14px">This is just for you.</p>
+    <h1>Hey.</h1>
+    <p>
+      I didn’t know how to say things properly.<br>
+      So I built this instead.
+    </p>
+    <button class="primary" onclick="next()">Okay</button>
+  </div>
+</section>
 
-<!-- SCENE 2 : ENVELOPE -->
-<div class="scene">
-  <div class="card">
-    <p>There’s something I didn’t say out loud.</p>
-    <div class="envelope" onclick="openLetter()">✉️</div>
-    <p style="font-size:13px;opacity:.6">Tap the envelope</p>
+<!-- FIGHT -->
+<section>
+  <div class="card fight">
+    <img src="assets/animations/fight.gif">
+    <p style="margin-top:14px">
+      We fight.<br>
+      Over nonsense.<br>
+      And then act like nothing happened.
+    </p>
+    <button class="primary" onclick="next()">You know it’s true</button>
+  </div>
+</section>
 
-    <div class="letter" id="letter">
-      I don’t always explain myself well.<br><br>
-      So I made this instead.<br><br>
-      Read slowly.
-    </div>
+<!-- QUESTION -->
+<section>
+  <div class="card">
+    <p>
+      Be honest for a second.<br><br>
+      After all this chaos…<br>
+      do you still consider me your best friend?
+    </p>
+    <div class="choice">
+      <button class="primary" onclick="next()">Yes</button>
+      <button class="no" id="noBtn">No</button>
+    </div>
+  </div>
+</section>
 
-    <button id="envNext" style="display:none" onclick="next()">Okay</button>
-  </div>
-</div>
+<!-- DIRECT MESSAGE -->
+<section>
+  <div class="card">
+    <p>
+      I already knew your answer.<br><br>
+      I just wanted to hear it anyway.
+    </p>
+    <button class="primary" onclick="next()">Continue</button>
+  </div>
+</section>
 
-<!-- SCENE 3 : BOUQUET -->
-<div class="scene">
-  <div class="card">
-    <div class="bouquet">💐</div>
-    <p>
-      A digital bouquet for you.<br><br>
-      These flowers won’t fade.<br>
-      They won’t dry.<br>
-      They won’t get ruined.<br><br>
-      Just like our friendship.
-    </p>
-    <button onclick="next()">I get it</button>
-  </div>
-</div>
+<!-- MEMORIES -->
+<section>
+  <div class="card">
+    <p>
+      These aren’t just photos.<br>
+      They’re small proofs that we existed like this.
+    </p>
+    <div class="slider">
+      <div class="slide"><img src="images/1.jpg"></div>
+      <div class="slide"><img src="images/2.jpg"></div>
+      <div class="slide"><img src="images/3.jpg"></div>
+      <div class="slide"><img src="images/4.jpg"></div>
+      <div class="slide"><img src="images/5.jpg"></div>
+      <div class="slide"><img src="images/6.jpg"></div>
+    </div>
+    <p style="margin-top:10px;opacity:.6;font-size:13px">Swipe slowly →</p>
+    <button class="primary" onclick="next()">There’s more</button>
+  </div>
+</section>
 
-<!-- SCENE 4 : FIGHT GIF -->
-<div class="scene">
-  <div class="card fight">
-    <p>
-      We fight.<br>
-      We argue.<br>
-      We get annoyed 😤
-    </p>
-    <img src="assets/animations/fight.gif">
-    <p>
-      But somehow…<br>
-      we always come back.
-    </p>
-    <button onclick="next()">Of course</button>
-  </div>
-</div>
+<!-- CALM -->
+<section>
+  <div class="card">
+    <p>
+      No matter how loud things get…<br>
+      this part stays quiet.
+    </p>
+    <div class="avatars">
+      <img src="assets/avatars/me.jpg" class="avatar">
+      <img src="assets/avatars/her.jpg" class="avatar">
+    </div>
+    <button class="primary" onclick="next()">One last thing</button>
+  </div>
+</section>
 
-<!-- SCENE 5 : QUESTION -->
-<div class="scene">
-  <div class="card">
-    <p>
-      Be honest now.<br><br>
-      After everything…<br>
-      do you still consider me your best friend?
-    </p>
-    <button onclick="next()">Yes</button>
-    <button id="noBtn" style="margin-top:12px;background:rgba(255,255,255,.2);color:#fff">
-      No
-    </button>
-  </div>
-</div>
+<!-- LETTER -->
+<section>
+  <div class="card">
+    <p>
+      I won’t say this out loud.<br>
+      So read it instead.
+    </p>
+    <div class="envelope" id="env">
+      <div class="letter">
+        <div class="handwritten" id="note"></div>
+      </div>
+    </div>
+  </div>
+</section>
 
-<!-- SCENE 6 : PHOTOS -->
-<div class="scene">
-  <div class="card">
-    <p>Some moments explain everything 📸</p>
+<!-- VIDEO -->
+<section>
+  <div class="card">
+    <p>Watch till the end.</p>
+    <div class="video-box">
+      <video id="vid" controls playsinline>
+        <source src="images/memory.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
 
-    <div class="gallery" onscroll="unlockPhotos()">
-      <img src="images/1.jpg">
-      <img src="images/2.jpg">
-      <img src="images/3.jpg">
-      <img src="images/4.jpg">
-      <img src="images/5.jpg">
-      <img src="images/6.jpg">
-    </div>
-
-    <div class="hint">← swipe slowly</div>
-    <button id="photoNext" style="display:none" onclick="next()">Continue</button>
-  </div>
-</div>
-
-<!-- SCENE 7 : VIDEO -->
-<div class="scene">
-  <div class="card">
-    <p>Watch this till the end 🎥</p>
-    <video id="vid" controls playsinline>
-      <source src="images/memory.mp4" type="video/mp4">
-    </video>
-  </div>
-</div>
-
-<!-- SCENE 8 : END -->
-<div class="scene">
-  <div class="card">
-    <p>If you’re here…</p>
-    <h1 style="margin-top:10px">1.2</h1>
-    <p style="font-family:'Pacifico',cursive;margin-top:14px">
-      You know why.<br>
-      And that’s enough.
-    </p>
-  </div>
-</div>
+<!-- SECRET -->
+<section>
+  <div class="card">
+    <p style="opacity:.7">If you’re still here…</p>
+    <h1 style="margin-top:10px">1.2</h1>
+    <p class="handwritten" style="margin-top:14px">
+      You know why.<br>
+      And that’s enough.
+    </p>
+  </div>
+</section>
 
 <script>
-let current = 0;
-const scenes = document.querySelectorAll('.scene');
-
+let current=0;
+const sections=document.querySelectorAll('section');
 function next(){
-  scenes[current].classList.remove('active');
-  current++;
-  scenes[current].classList.add('active');
+  sections[current].classList.remove('active');
+  current++;
+  sections[current].classList.add('active');
 }
-
-/* Envelope */
-function openLetter(){
-  document.getElementById('letter').style.display='block';
-  document.getElementById('envNext').style.display='block';
-}
-
-/* No button tease */
-document.getElementById('noBtn').onmouseover = e=>{
-  e.target.textContent = "Nice try 😌";
-  e.target.style.transform =
-    `translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
+document.getElementById('noBtn').onmouseover=e=>{
+  e.target.textContent="Nice try 😌";
+  e.target.style.transform=`translate(${Math.random()*120-60}px,${Math.random()*80-40}px)`;
 };
 
-/* Photos unlock */
-function unlockPhotos(){
-  document.getElementById('photoNext').style.display='block';
-}
+/* Letter typing */
+const env=document.getElementById('env');
+const note=document.getElementById('note');
+const text="I don’t know how long this stays.\nOr when you’ll read it.\n\nBut if you smiled even once…\nthat was the point.";
+let i=0;
+env.onclick=()=>{
+  if(env.classList.contains('open')) return;
+  env.classList.add('open');
+  const t=setInterval(()=>{
+    note.textContent+=text[i++];
+    if(i>=text.length){
+      clearInterval(t);
+      setTimeout(next,1200);
+    }
+  },70);
+};
 
 /* Video unlock */
-document.getElementById('vid').onended = ()=> next();
+document.getElementById('vid').onended=()=>next();
 </script>
 
 </body>
